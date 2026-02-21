@@ -1,0 +1,13 @@
+packages
+
+nodejs
+ express
+ mongoose
+ cors
+ bcryptjs
+ dotenv
+ jwt
+ nodemon
+
+ multer    // for image uploading
+ nodemailer    // for mail sending
