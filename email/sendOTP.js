@@ -1,19 +1,34 @@
 import nodemailer from "nodemailer"
+import dns from "dns";
 import dotenv from "dotenv"
 
 dotenv.config()
 
+dns.setDefaultResultOrder("ipv4first");
+
+// const transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 465,
+//     secure: true, // Use true for port 465, false for port 587
+//     family:4,
+//     auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASSWORD,
+//     },
+// });
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // Use true for port 465, false for port 587
-    family:4,
+    service: "gmail", // 👈 use service instead of host
+    port: 587,
+    secure: false, // MUST be false for 587
+    requireTLS: true,
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        pass: process.env.EMAIL_PASSWORD, // App password
     },
+    tls: {
+        family: 4, // Force IPv4
+    }
 });
-
 // export const sendOtpEmail = async (email, otp) => {
 //     await transporter.sendMail({
 //         from: `"OTP Verification"<${process.env.EMAIL_USER}>`,
