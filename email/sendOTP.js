@@ -14,13 +14,31 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const sendOtpEmail = async (email, otp) => {
-    await transporter.sendMail({
-        from: `"OTP Verification"<${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Your OTP code",
-        text: "Hello world?", // Plain-text version of the message
-        html: `<h2>Your OTP is :${otp}</h2><p>valid for 5 minutes </p>`, // HTML version of the message
-    });
-}
+// export const sendOtpEmail = async (email, otp) => {
+//     await transporter.sendMail({
+//         from: `"OTP Verification"<${process.env.EMAIL_USER}>`,
+//         to: email,
+//         subject: "Your OTP code",
+//         text: "Hello world?", 
+//         html: `<h2>Your OTP is :${otp}</h2><p>valid for 5 minutes </p>`, 
+//     });
+// }
 
+
+export const sendOtpEmail = async (email, otp) => {
+    try {
+        const info = await transporter.sendMail({
+            from: `"OTP Verification" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Your OTP code",
+            html: `<h2>Your OTP is: ${otp}</h2><p>Valid for 5 minutes</p>`,
+        });
+
+        console.log("Email sent:", info.response);
+        return true;
+
+    } catch (error) {
+        console.error("Email error:", error);
+        throw error;
+    }
+};
