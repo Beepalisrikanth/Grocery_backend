@@ -5,7 +5,7 @@ dotenv.config()
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
+    port: 465,
     secure: false, // Use true for port 465, false for port 587
     family:4,
     auth: {
@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendOtpEmail = async (email, otp) => {
     await transporter.sendMail({
-        from: `"OTP Verification"<${process.env.EMAIL_USER}`,
+        from: `"OTP Verification"<${process.env.EMAIL_USER}>`,
         to: email,
         subject: "Your OTP code",
         text: "Hello world?", // Plain-text version of the message
